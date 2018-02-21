@@ -19,7 +19,10 @@
 package org.ballerinalang.testerina.core;
 
 import org.ballerinalang.compiler.CompilerPhase;
+import org.ballerinalang.config.ConfigRegistry;
+import org.ballerinalang.config.utils.ConfigFileParserException;
 import org.ballerinalang.launcher.LauncherUtils;
+import org.ballerinalang.logging.BLogManager;
 import org.ballerinalang.model.values.BString;
 import org.ballerinalang.testerina.core.entity.TesterinaContext;
 import org.ballerinalang.testerina.core.entity.TesterinaFunction;
@@ -37,6 +40,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.LogManager;
 
 import static org.ballerinalang.compiler.CompilerOptionName.COMPILER_PHASE;
 import static org.ballerinalang.compiler.CompilerOptionName.PRESERVE_WHITESPACE;
@@ -69,6 +73,13 @@ public class BTestRunner {
      * @param ignoreGroups    flag to specify whether to include or exclude provided groups
      */
     public void runTest(Path[] sourceFilePaths, List<String> groups, boolean ignoreGroups) {
+
+        try {
+            ConfigRegistry.getInstance().loadConfigurations();
+            ((BLogManager) LogManager.getLogManager()).loadUserProvidedLogConfiguration();
+        } catch (ConfigFileParserException e) {
+            throw new RuntimeException("failed to start ballerina runtime: " + e.getMessage(), e);
+        }
         ProgramFile[] programFiles = Arrays.stream(sourceFilePaths).map(BTestRunner::buildTestModel)
                 .toArray(ProgramFile[]::new);
         Arrays.stream(programFiles).forEachOrdered(programFile -> {

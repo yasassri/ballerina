@@ -169,7 +169,14 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.config.file>${project.build.testOutputDirectory}/logging.properties</java.util.logging.config.file>
+                        <java.util.logging.manager>org.ballerinalang.logging.BLogManager</java.util.logging.manager>
+                    </systemPropertyVariables>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
                     <additionalClasspathElements>
                         <additionalClasspathElement>${basedir}/target/classes/org/wso2/ballerina/nativeimpl
                             /BallerinaNativeConstructsProvider.class</additionalClasspathElement>

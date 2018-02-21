@@ -17,10 +17,12 @@
  */
 package org.ballerinalang.testerina.core;
 
+import com.beust.jcommander.DynamicParameter;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.ParameterDescription;
 import com.beust.jcommander.Parameters;
+import org.ballerinalang.config.ConfigRegistry;
 import org.ballerinalang.launcher.BLauncherCmd;
 import org.ballerinalang.launcher.LauncherUtils;
 
@@ -28,7 +30,9 @@ import java.io.PrintStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Test command for ballerina launcher.
@@ -65,6 +69,9 @@ public class TestCmd implements BLauncherCmd {
     @Parameter(names = "--disable-groups", description = "test groups to be excluded from executed")
     private List<String> disableGroupList;
 
+    @DynamicParameter(names = "-B", description = "collects dynamic parameters")
+    private Map<String, String> configRuntimeParams = new HashMap<>();
+
     public void execute() {
         if (helpFlag) {
             printCommandUsageInfo(parentCmdParser, "test");
@@ -83,6 +90,8 @@ public class TestCmd implements BLauncherCmd {
             throw LauncherUtils
                     .createUsageException("Cannot specify both --groups and --disable-groups flags at the same time");
         }
+
+        ConfigRegistry.getInstance().initRegistry(configRuntimeParams);
 
         Path[] paths = sourceFileList.stream().map(Paths::get).toArray(Path[]::new);
 
