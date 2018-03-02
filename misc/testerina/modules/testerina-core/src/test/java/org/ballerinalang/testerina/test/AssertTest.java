@@ -47,7 +47,7 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*intAdd function " +
-            "failed expected \\[8\\] but found \\[6\\].*")
+            "failed : expected 8 but found 6.*")
     public void testAssertIntEqualsFail() {
         BValue[] args = {new BInteger(3), new BInteger(3)};
         BTestUtils.invoke(compileResult, "testAssertIntEquals", args);
@@ -60,7 +60,7 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*floatAdd function " +
-            "failed expected \\[30.05\\] but found \\[21.05\\].*")
+            "failed : expected 30.05 but found 21.05.*")
     public void testAssertFloatEqualsFail() {
         BValue[] args = {new BFloat(1), new BFloat(20.050)};
         BTestUtils.invoke(compileResult, "testAssertFloatEquals", args);
@@ -73,7 +73,7 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*string concatenation" +
-            " failed expected \\[JohnDoe\\] but found \\[DoeJohn\\].*")
+            " failed : expected JohnDoe but found DoeJohn.*")
     public void testAssertStringEqualsFail() {
         BValue[] args = {new BString("Doe"), new BString("John")};
         BTestUtils.invoke(compileResult, "testAssertStringEquals", args);
@@ -112,7 +112,7 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*assertBooleanEquals" +
-            " failed expected \\[false\\] but found \\[true\\].*")
+            " failed : expected false but found true.*")
     public void testAssertBooleanEqualsFail() {
         BValue[] args = {new BBoolean(true), new BBoolean(false)};
         BTestUtils.invoke(compileResult, "testAssertBooleanEquals", args);
@@ -138,21 +138,23 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed \\(Array lengths are not the same\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[\"A\", \"B\", \"C\"\\] but found \\[\"A\", \"B\"," +
+                  " \"C\", \"D\"\\].*")
     public void testAssertStringArrayEquals1() {
         BValue[] args = {new BInteger(1)};
         BTestUtils.invoke(compileResult, "testAssertStringArrayEquals", args);
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed. expected \\[b\\] but found \\[B\\] \\(at index 1\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[\"A\", \"b\", \"C\"\\] but found \\[\"A\", \"B\"," +
+                  " \"C\"\\].*")
     public void testAssertStringArrayEquals2() {
         BValue[] args = {new BInteger(2)};
         BTestUtils.invoke(compileResult, "testAssertStringArrayEquals", args);
     }
 
-    @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*arrays are not equal" +
-            ". expected \\[b\\] but found \\[B\\] \\(at index 1\\).*")
+    @Test(expectedExceptions = BLangRuntimeException.class, expectedExceptionsMessageRegExp = ".*failed : expected " +
+            "\\[\"A\", \"b\", \"C\"\\] but found \\[\"A\", \"B\", \"C\"\\].*")
     public void testAssertStringArrayEquals3() {
         BValue[] args = {new BInteger(3)};
         BTestUtils.invoke(compileResult, "testAssertStringArrayEquals", args);
@@ -165,14 +167,14 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed \\(Array lengths are not the same\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[1, 2, 3\\] but found \\[1, 2, 3, 4\\].*")
     public void testAssertIntArrayEquals1() {
         BValue[] args = {new BInteger(1)};
         BTestUtils.invoke(compileResult, "testAssertIntArrayEquals", args);
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed. expected \\[5\\] but found \\[2\\] \\(at index 1\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[1, 5, 3\\] but found \\[1, 2, 3\\].*")
     public void testAssertIntArrayEquals2() {
         BValue[] args = {new BInteger(2)};
         BTestUtils.invoke(compileResult, "testAssertIntArrayEquals", args);
@@ -185,14 +187,15 @@ public class AssertTest {
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed \\(Array lengths are not the same\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[1.1, 2.2, 3.3\\] but found \\[1.1, 2.2, 3.3, " +
+                  "4.4\\].*")
     public void testAssertFloatArrayEquals1() {
         BValue[] args = {new BInteger(1)};
         BTestUtils.invoke(compileResult, "testAssertFloatArrayEquals", args);
     }
 
     @Test(expectedExceptions = BLangRuntimeException.class,
-          expectedExceptionsMessageRegExp = ".*failed. expected \\[2.22\\] but found \\[2.2\\] \\(at index 1\\).*")
+          expectedExceptionsMessageRegExp = ".*failed : expected \\[1.1, 2.22, 3.3\\] but found \\[1.1, 2.2, 3.3\\].*")
     public void testAssertFloatArrayEquals2() {
         BValue[] args = {new BInteger(2)};
         BTestUtils.invoke(compileResult, "testAssertFloatArrayEquals", args);
