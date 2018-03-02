@@ -190,9 +190,23 @@ public class BCompileUtil {
      * @return Semantic errors
      */
     public static CompileResult compile(String sourceRoot, String packageName, CompilerPhase compilerPhase) {
+        return compile(sourceRoot, packageName, compilerPhase, true);
+    }
+
+    /**
+     * Compile and return the semantic errors.
+     *
+     * @param sourceRoot    root path of the source packages
+     * @param packageName   name of the package to compile
+     * @param compilerPhase Compiler phase
+     * @param shouldResolveSourceRoot whether the source root is already resolved to an absolute path or not
+     * @return Semantic errors
+     */
+    public static CompileResult compile(String sourceRoot, String packageName, CompilerPhase compilerPhase, boolean
+            shouldResolveSourceRoot) {
         CompilerContext context = new CompilerContext();
         CompilerOptions options = CompilerOptions.getInstance(context);
-        options.put(SOURCE_ROOT, resourceDir.resolve(sourceRoot).toString());
+        options.put(SOURCE_ROOT, shouldResolveSourceRoot ? resourceDir.resolve(sourceRoot).toString() : sourceRoot);
         options.put(COMPILER_PHASE, compilerPhase.toString());
         options.put(PRESERVE_WHITESPACE, "false");
 
