@@ -47,7 +47,6 @@ public class TesterinaFunction {
 
     // Annotation info
     private List<String> groups = new ArrayList<>();
-    private List<String[]> valueSet = new ArrayList<>();
 
     static final String PREFIX_TEST = "TEST";
     static final String PREFIX_BEFORETEST = "BEFORETEST";
@@ -79,8 +78,8 @@ public class TesterinaFunction {
         this.programFile = programFile;
     }
 
-    public void invoke() throws BallerinaException {
-        invoke(new BValue[] {});
+    public BValue[] invoke() throws BallerinaException {
+        return invoke(new BValue[] {});
     }
 
     /**
@@ -88,11 +87,11 @@ public class TesterinaFunction {
      *
      * @param args function arguments
      */
-    public void invoke(BValue[] args) {
+    public BValue[] invoke(BValue[] args) {
         Context ctx = new Context(programFile);
         Debugger debugger = new Debugger(programFile);
         initDebugger(ctx, debugger);
-        BLangFunctions.invokeFunction(programFile, bFunction, args, ctx);
+        return BLangFunctions.invokeFunction(programFile, bFunction, args, ctx);
     }
 
     public String getName() {
@@ -117,14 +116,6 @@ public class TesterinaFunction {
 
     public void setGroups(List<String> groups) {
         this.groups = groups;
-    }
-
-    public List<String[]> getValueSet() {
-        return valueSet;
-    }
-
-    public void setValueSet(List<String[]> valueSet) {
-        this.valueSet = valueSet;
     }
 
     public boolean getRunTest() {
