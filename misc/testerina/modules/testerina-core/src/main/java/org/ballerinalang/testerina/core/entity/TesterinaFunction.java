@@ -49,6 +49,7 @@ public class TesterinaFunction {
     private List<String> groups = new ArrayList<>();
 
     static final String PREFIX_TEST = "TEST";
+    static final String PREFIX_UTIL = "UTIL";
     static final String PREFIX_BEFORETEST = "BEFORETEST";
     static final String PREFIX_AFTERTEST = "AFTERTEST";
     static final String PREFIX_MOCK = "MOCK";
@@ -59,7 +60,7 @@ public class TesterinaFunction {
      */
     public enum Type {
         TEST(PREFIX_TEST), BEFORE_TEST(PREFIX_BEFORETEST), AFTER_TEST(PREFIX_AFTERTEST), MOCK(PREFIX_MOCK), INIT
-                (INIT_SUFFIX);
+                (INIT_SUFFIX), UTIL(PREFIX_UTIL);
 
         String prefix;
 
