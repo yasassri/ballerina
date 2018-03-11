@@ -37,16 +37,19 @@ public class TesterinaFunction {
 
     private static final int WORKER_TIMEOUT = 10;
 
-    public static final String PREFIX_TEST = "TEST";
-    public static final String PREFIX_BEFORETEST = "BEFORETEST";
-    public static final String PREFIX_AFTERTEST = "AFTERTEST";
-    public static final String INIT_SUFFIX = ".<INIT>";
+    static final String PREFIX_TEST = "TEST";
+    static final String PREFIX_UTIL = "UTIL";
+    static final String PREFIX_BEFORETEST = "BEFORETEST";
+    static final String PREFIX_AFTERTEST = "AFTERTEST";
+    static final String PREFIX_MOCK = "MOCK";
+    static final String INIT_SUFFIX = ".<INIT>";
 
     /**
      * Prefixes for the test function names.
      */
     public enum Type {
-        TEST(PREFIX_TEST), BEFORE_TEST(PREFIX_BEFORETEST), AFTER_TEST(PREFIX_AFTERTEST);
+        TEST(PREFIX_TEST), BEFORE_TEST(PREFIX_BEFORETEST), AFTER_TEST(PREFIX_AFTERTEST), MOCK(PREFIX_MOCK), INIT
+                (INIT_SUFFIX), UTIL(PREFIX_UTIL);
 
         String prefix;
 
@@ -60,7 +63,7 @@ public class TesterinaFunction {
         }
     }
 
-    TesterinaFunction(ProgramFile programFile, FunctionInfo bFunction, Type type) {
+    public TesterinaFunction(ProgramFile programFile, FunctionInfo bFunction, Type type) {
         this.name = bFunction.getName();
         this.type = type;
         this.bFunction = bFunction;
