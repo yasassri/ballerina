@@ -87,7 +87,8 @@ public class TestCmd implements BLauncherCmd {
             // TODO this should be properly fixed once the Packering V4 is done
             Path userDir = Paths.get(System.getProperty("user.dir"));
             try {
-                sourceFileList = Files.walk(userDir, 1).filter(Files::isDirectory).filter(file -> file != userDir)
+                sourceFileList = Files.walk(userDir, 1).filter(Files::isDirectory)
+                    .filter(file -> file != userDir && !file.getFileName().startsWith(".ballerina"))
                         .map(path -> path.getFileName().toString()).collect(Collectors.toList());
             } catch (IOException e) {
                 throw LauncherUtils.createUsageException("Failed to load the ballerina package/s from " + userDir);
